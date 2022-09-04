@@ -20,13 +20,13 @@ resource "aws_kms_key" "encrypt_key" {
   deletion_window_in_days = 10
 }
 
-resource "aws_s3_bucket" "bucket" {
+resource "aws_s3_bucket" "storage" {
   bucket        = "tf-backend-state" # REPLACE WITH YOUR BUCKET NAME
   force_destroy = true
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_encryption" {
-  bucket = aws_s3_bucket.terraform_state.bucket
+resource "aws_s3_bucket_server_side_encryption_configuration" "storage_encryption" {
+  bucket = aws_s3_bucket.storage.bucket
 
   rule {
     apply_server_side_encryption_by_default {
@@ -36,8 +36,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_e
   }
 }
 
-resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
-  bucket = aws_s3_bucket.terraform_state.id
+resource "aws_s3_bucket_versioning" "storage_versioning" {
+  bucket = aws_s3_bucket.storage.id
   versioning_configuration {
     status = "Enabled"
   }
