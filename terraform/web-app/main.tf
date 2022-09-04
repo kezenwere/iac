@@ -27,4 +27,8 @@ module "web_app" {
   db_name          = "${var.environment_name}-db"
   db_user          = "admin"
   db_pass          = var.db_pass
+
+  depends_on = [
+    aws_route53_zone.primary
+  ]
 }
